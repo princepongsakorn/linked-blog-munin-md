@@ -7,9 +7,10 @@ tags:
   - bioinformatics
 ---
 
-Ref paper.
-https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8828266/
-https://pubmed.ncbi.nlm.nih.gov/33439104/
+> Ref paper.
+> 
+> https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8828266/
+> https://pubmed.ncbi.nlm.nih.gov/33439104/
 
 ---
 > Inflammatory Bowel Disease (IBD) _เป็นกลุ่มโรคที่มีการอักเสบของระบบทางเดินอาหาร_

@@ -7,9 +7,10 @@ tags:
   - bioinformatics
 ---
 
-Ref paper.
-https://pubmed.ncbi.nlm.nih.gov/36357393/
-https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9649010/
+> Ref paper.
+> 
+> https://pubmed.ncbi.nlm.nih.gov/36357393/
+> https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9649010/
 
 ---
 #### การวินิจฉัยโรค microbiome ในอุจจาระ โดย ML (ความไม่สมดุลของจุลินทรีย์ในลำไส้ หรือที่เรียกว่า “dysbiosis” มีส่วนในการก่อให้เกิดโรคต่างๆ ในมนุษย์)

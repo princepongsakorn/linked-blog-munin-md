@@ -7,9 +7,10 @@ tags:
   - bioinformatics
 ---
 
-Ref paper.
-https://pubmed.ncbi.nlm.nih.gov/36419034/
-https://microbialcellfactories.biomedcentral.com/articles/10.1186/s12934-022-01973-4
+> Ref paper.
+> 
+> https://pubmed.ncbi.nlm.nih.gov/36419034/
+> https://microbialcellfactories.biomedcentral.com/articles/10.1186/s12934-022-01973-4
 
 ---
 #### เนื้อหาหลักของเปเปอร์นี้คือ
