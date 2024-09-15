@@ -1,5 +1,6 @@
 ---
-title: "How to get Project/Account ID and Token from Vercel"
+title: How to get Project/Account ID and Token from Vercel
+date: 2022-11-01
 ---
 1. Go to your Project settings, you'll want to copy the project id (Project Settings > General > Project Id). Save this for later.
 ![[vercel-project-id.png]]
