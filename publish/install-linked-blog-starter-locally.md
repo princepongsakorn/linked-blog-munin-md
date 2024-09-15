@@ -1,5 +1,5 @@
 ---
-title: "Install linked-blog-starter locally"
+title: Install linked-blog-starter locally
 ---
 1. Clone this repo by running `git clone https://github.com/matthewwong525/linked-blog-starter`
 2. `cd linked-blog-starter`
