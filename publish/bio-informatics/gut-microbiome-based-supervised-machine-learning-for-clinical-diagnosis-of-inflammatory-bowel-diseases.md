@@ -1,4 +1,13 @@
-2021 Jan 13
+---
+title: Gut microbiome based supervised machine learning for clinical diagnosis of inflammatory bowel diseases
+date: 2021-01-13
+tags:
+  - microbiome
+  - ml
+  - bioinformatics
+---
+
+Ref paper.
 https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8828266/
 https://pubmed.ncbi.nlm.nih.gov/33439104/
 

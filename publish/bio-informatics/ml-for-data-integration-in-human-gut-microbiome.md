@@ -1,4 +1,13 @@
-23 November 2022
+---
+title: Machine learning for data integration in human gut microbiome
+date: 2022-11-23
+tags:
+  - microbiome
+  - ml
+  - bioinformatics
+---
+
+Ref paper.
 https://pubmed.ncbi.nlm.nih.gov/36419034/
 https://microbialcellfactories.biomedcentral.com/articles/10.1186/s12934-022-01973-4
 

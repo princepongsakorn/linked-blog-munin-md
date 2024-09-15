@@ -1,12 +1,14 @@
 ---
 title: Faecal microbiome based ML for multi class disease diagnosis
 date: 2022-11-10
-url: https://pubmed.ncbi.nlm.nih.gov/36357393/
 tags:
   - microbiome
   - ml
   - bioinformatics
 ---
+
+Ref paper.
+https://pubmed.ncbi.nlm.nih.gov/36357393/
 https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9649010/
 
 ---
