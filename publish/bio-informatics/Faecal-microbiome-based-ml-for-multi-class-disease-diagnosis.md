@@ -1,5 +1,6 @@
 ---
 title: Faecal microbiome based ML for multi class disease diagnosis
+excerpt: "งานวิจัยนี้ใช้ ML สำหรับการวินิจฉัยโรคโดยอิงจากข้อมูล microbiome ในอุจจาระ โดยใช้โมเดล multi-class classification ซึ่งสามารถตรวจจับความแตกต่างของจุลินทรีย์ที่มีลักษณะเฉพาะสำหรับหลายโรค ในการศึกษาใช้ข้อมูลจากตัวอย่างอุจจาระของผู้เข้าร่วม 2,320 "
 date: 2022-11-10
 ---
 
