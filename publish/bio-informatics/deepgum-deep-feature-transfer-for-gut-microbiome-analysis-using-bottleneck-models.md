@@ -50,19 +50,9 @@ Auto encoder เป็นสถาปัตยกรรมแบบ Neural Netwo
 
 **U-net** เป็นสถาปัตยกรรม Neural Network ที่ออกแบบมาเพื่อการแบ่งส่วนภาพ (Image Segmentation) ในกรณีนี้ U-net ถูกใช้ในการสกัดคุณลักษณะเชิงลึกจากข้อมูลทางไมโครไบโอม โดย U-net จะลดมิติของข้อมูลผ่าน Encoder แล้วขยายกลับมาผ่าน Decoder เช่นเดียวกับ Autoencoder ข้อมูลที่ถูกลดมิติผ่าน U-net สามารถใช้ในการทำนายโรคได้โดยโมเดลจำแนกเช่นเดียวกัน
 
-![[Pasted image 20240921194143.png]]
+![[Frame 2.png]]
 
-> ภาพนี้แสดงถึงกระบวนการทำงานของการสกัดคุณลักษณะเชิงลึก (Deep Feature Extraction) ที่ใช้ใน **DeepGum**:
-> 1. **Autoencoder ที่มีการสร้างข้อมูลกลับมาใหม่ (Reconstructed Model)**:
-    - ในส่วนแรก (ด้านบนสุด) ข้อมูลจากชุดข้อมูลที่ถูกนำมาใช้งานจะถูกป้อนเข้าสู่ Autoencoder
-    - Autoencoder จะทำการบีบอัดข้อมูลเข้าสู่พื้นที่แฝง (Latent Space) และทำการขยายข้อมูลกลับมาใหม่ (Reconstruction)
-    - ข้อมูลที่ขยายกลับมาใหม่จะถูกส่งต่อไปยังตัวจำแนก (MLP, RF, XGBoost) เพื่อทำการทำนาย
-> 2. **Autoencoder ที่ใช้ข้อมูลบีบอัดจาก Encoder (Encoder Model)**:
-    - ในส่วนที่สอง (ต่อจากด้านบน) ข้อมูลจะถูกบีบอัดโดย Encoder และใช้ข้อมูลที่ถูกบีบอัดนั้นในการฝึกตัวจำแนกโดยตรง
-> 3. **U-net ที่มีการสร้างข้อมูลกลับมาใหม่ (Reconstructed Model)**:
-    - ในส่วนที่สาม (ตรงกลาง) U-net จะใช้ข้อมูลทางไมโครไบโอมแล้วลดมิติโดยผ่าน Encoder จากนั้นขยายข้อมูลกลับมาใหม่ผ่าน Decoder เช่นเดียวกับ Autoencoder และข้อมูลที่ขยายกลับมาใหม่จะถูกใช้ในการจำแนกโรค
-> 4. **U-net ที่ใช้ข้อมูลบีบอัดจาก Encoder (Encoder Model)**:
-    - ในส่วนสุดท้าย ข้อมูลที่ถูกบีบอัดโดย Encoder จะถูกใช้ในการฝึกโมเดลจำแนกเพื่อทำนายโรคโดยตรง
+> The overview of DeepGum method. This approach involves training an autoencoder or a U-net with the merged microbiome dataset. The encoder model or reconstructed model, which emerges through training, reused for datasets with low sample sizes. Then a [classifier model](https://www-sciencedirect-com.chula.idm.oclc.org/topics/mathematics/classifier-model "Learn more about classifier model from ScienceDirect's AI-generated Topic Pages") (MLP, XGB and RF) is utilized to determine whether the samples belong to patients or healthy controls.
 
 ---
 ### Results
