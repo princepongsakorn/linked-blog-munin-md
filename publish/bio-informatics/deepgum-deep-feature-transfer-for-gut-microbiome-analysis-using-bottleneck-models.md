@@ -28,6 +28,8 @@ date: 2024-01-31
 
 เปเปอร์ใช้ 9 ชุดข้อมูล microbiome (9 different datasets related to [gastrointestinal diseases](https://www-sciencedirect-com.chula.idm.oclc.org/topics/medicine-and-dentistry/gastrointestinal-disease "Learn more about gastrointestinal diseases from ScienceDirect's AI-generated Topic Pages") from the ENA molecular database) 
 
+![[Pasted image 20240922142401.png]]
+
 >5 datasets comprise of [IBD](https://www-sciencedirect-com.chula.idm.oclc.org/topics/medicine-and-dentistry/inflammatory-bowel-disease "Learn more about IBD from ScienceDirect's AI-generated Topic Pages") cohorts and 4 datasets involve [CRC](https://www-sciencedirect-com.chula.idm.oclc.org/topics/pharmacology-toxicology-and-pharmaceutical-science/colorectal-cancer "Learn more about CRC from ScienceDirect's AI-generated Topic Pages") cohorts
 
 ในลำไส้ที่เกี่ยวกับโรคในระบบทางเดินอาหาร ซึ่งประกอบไปด้วยชุดข้อมูลเกี่ยวกับโรคลำไส้อักเสบ (IBD) และมะเร็งลำไส้ใหญ่ (CRC) โดยใช้ **MetaPhlAn 3.0** ในการสกัด taxonomic features จากชุดข้อมูลและรวมเป็นชุดข้อมูลที่มีทั้งหมด 2377 ตัวอย่าง และ 1104 taxonomic features (merged dataset, with 1104 features and 2377 samples, is divided into 20% [test data](https://www-sciencedirect-com.chula.idm.oclc.org/topics/mathematics/test-data "Learn more about test data from ScienceDirect's AI-generated Topic Pages") and 80% training data.)
