@@ -30,7 +30,7 @@ date: 2024-01-31
 
 >5 datasets comprise of [IBD](https://www-sciencedirect-com.chula.idm.oclc.org/topics/medicine-and-dentistry/inflammatory-bowel-disease "Learn more about IBD from ScienceDirect's AI-generated Topic Pages") cohorts and 4 datasets involve [CRC](https://www-sciencedirect-com.chula.idm.oclc.org/topics/pharmacology-toxicology-and-pharmaceutical-science/colorectal-cancer "Learn more about CRC from ScienceDirect's AI-generated Topic Pages") cohorts
 
-ในลำไส้ที่เกี่ยวกับโรคในระบบทางเดินอาหาร ซึ่งประกอบไปด้วยชุดข้อมูลเกี่ยวกับโรคลำไส้อักเสบ (IBD) และมะเร็งลำไส้ใหญ่ (CRC) โดยใช้ **MetaPhlAn 3.0** ในการสกัด taxonomic features จากชุดข้อมูลและรวมเป็นชุดข้อมูลที่มีทั้งหมด 2377 ตัวอย่าง และ 1104 taxonomic features
+ในลำไส้ที่เกี่ยวกับโรคในระบบทางเดินอาหาร ซึ่งประกอบไปด้วยชุดข้อมูลเกี่ยวกับโรคลำไส้อักเสบ (IBD) และมะเร็งลำไส้ใหญ่ (CRC) โดยใช้ **MetaPhlAn 3.0** ในการสกัด taxonomic features จากชุดข้อมูลและรวมเป็นชุดข้อมูลที่มีทั้งหมด 2377 ตัวอย่าง และ 1104 taxonomic features (merged dataset, with 1104 features and 2377 samples, is divided into 20% [test data](https://www-sciencedirect-com.chula.idm.oclc.org/topics/mathematics/test-data "Learn more about test data from ScienceDirect's AI-generated Topic Pages") and 80% training data.)
 
 #### 2. Deep Feature Extraction with Unsupervised Methods
 
@@ -50,9 +50,41 @@ Auto encoder เป็นสถาปัตยกรรมแบบ Neural Netwo
 
 **U-net** เป็นสถาปัตยกรรม Neural Network ที่ออกแบบมาเพื่อการแบ่งส่วนภาพ (Image Segmentation) ในกรณีนี้ U-net ถูกใช้ในการสกัดคุณลักษณะเชิงลึกจากข้อมูลทางไมโครไบโอม โดย U-net จะลดมิติของข้อมูลผ่าน Encoder แล้วขยายกลับมาผ่าน Decoder เช่นเดียวกับ Autoencoder ข้อมูลที่ถูกลดมิติผ่าน U-net สามารถใช้ในการทำนายโรคได้โดยโมเดลจำแนกเช่นเดียวกัน
 
+#### The overview of DeepGum method.
+โครงสร้างและกระบวนการทำงานของโมเดล Autoencoder และ U-net ที่ถูกใช้ในงานวิจัยนี้สำหรับการจำแนกโรคจากข้อมูล mircobiome ซึ่งมีการแบ่งออกเป็น 4 ส่วนหลัก โดยแต่ละส่วนมีรายละเอียดดังนี้
+
 ![[Frame 2.png]]
 
 > The overview of DeepGum method. This approach involves training an autoencoder or a U-net with the merged microbiome dataset. The encoder model or reconstructed model, which emerges through training, reused for datasets with low sample sizes. Then a [classifier model](https://www-sciencedirect-com.chula.idm.oclc.org/topics/mathematics/classifier-model "Learn more about classifier model from ScienceDirect's AI-generated Topic Pages") (MLP, XGB and RF) is utilized to determine whether the samples belong to patients or healthy controls.
+### Layer details of DeepGum.
+
+โดยแต่ละส่วนใน DeepGum แสดงให้เห็นการใช้งานของโครงสร้าง **U-net** และ **Autoencoder** สำหรับการสกัดคุณลักษณะเชิงลึกในข้อมูลไมโครไบโอม โดย **U-net1/4** และ **Autoencoder1/4** มีโครงสร้างครบทั้งการบีบอัดและการสร้างข้อมูลใหม่ ขณะที่ **U-net-encode1/4** และ **Encoder1/4** ใช้เฉพาะการบีบอัดข้อมูลเพื่อเลือกคุณลักษณะที่สำคัญ
+
+![[Pasted image 20240922133557.png]]
+#### 1. U-net1/4 (ส่วนซ้ายสุด)
+
+- เป็นโครงสร้างของ **U-net** ซึ่งประกอบด้วยการบีบอัดข้อมูล (down-sampling) และการสร้างข้อมูลใหม่ (up-sampling)
+- ในส่วนของการบีบอัด ข้อมูลนำเข้าจะถูกส่งผ่านเลเยอร์ **Conv1D** หลายชั้นเพื่อทำการคัดเลือกคุณลักษณะเชิงลึก
+- แต่ละชั้นจะมีการลดขนาดข้อมูลด้วย **MaxPooling1D** เพื่อลดขนาดของข้อมูลที่ผ่านไปแต่ละขั้น
+- หลังจากนั้นจะเข้าสู่กระบวนการสร้างข้อมูลใหม่ (up-sampling) ผ่านเลเยอร์ **UpSampling1D** ที่ขยายขนาดข้อมูลกลับมาในลักษณะเดิม
+- ข้อมูลในชั้นสุดท้ายจะถูกประกอบใหม่ (concatenate) จากหลายช่องทางข้อมูล
+
+#### 2. U-net-encode1/4 (ขวาของ U-net1/4)
+
+- เป็นการใช้โครงสร้างของ **U-net** แต่ทำการบีบอัดข้อมูลเท่านั้นโดยไม่ทำการสร้างใหม่
+- ข้อมูลจะถูกส่งผ่านเลเยอร์ **Conv1D** และ **MaxPooling1D** เหมือนกับโครงสร้าง U-net แต่จบที่การบีบอัดเพื่อนำคุณลักษณะที่ถูกเลือกไปใช้ในการจำแนกโรคในขั้นตอนต่อไป
+
+#### 3. Encoder1/4 (กลางขวา)
+
+- เป็นส่วนของ **Autoencoder** ที่ใช้เพียงโครงสร้างของ **Encoder**
+- ข้อมูลจะถูกบีบอัดผ่านเลเยอร์ **Conv1D** และ **MaxPooling1D** หลายชั้นเพื่อสร้างตัวแทนข้อมูลที่มีขนาดเล็กลง
+- โครงสร้างนี้ช่วยในการลดข้อมูลให้เหลือเฉพาะคุณลักษณะที่สำคัญสำหรับการจำแนกข้อมูล
+
+#### 4. Autoencoder1/4 (ขวาสุด)
+
+- โครงสร้างของ **Autoencoder** ที่ครบถ้วนทั้งการบีบอัดและการสร้างข้อมูลใหม่
+- ข้อมูลจะถูกบีบอัดผ่าน **Conv1D** และ **MaxPooling1D** หลายชั้น จากนั้นขยายขนาดข้อมูลกลับมาด้วย **UpSampling1D**
+- โครงสร้างนี้ใช้ในการสร้างข้อมูลใหม่ที่สูญเสียข้อมูลน้อยที่สุดจากข้อมูลที่ถูกบีบอัด
 
 ---
 ### Results
@@ -70,7 +102,13 @@ Auto encoder เป็นสถาปัตยกรรมแบบ Neural Netwo
     - DeepGum ยังคงแสดงผลลัพธ์ที่เหนือกว่ามากเมื่อใช้ข้อมูลจาก Encoder ของ U-net และ Autoencoder ซึ่งช่วยเพิ่มความแม่นยำในการแยกแยะผู้ป่วยที่มีมะเร็งลำไส้ใหญ่จากกลุ่มตัวอย่างที่ไม่เป็นโรค
     - ทั้งนี้ ชุดข้อมูลที่ถูกลดขนาดลงยังแสดงให้เห็นถึงความสามารถของ DeepGum ในการจัดการกับข้อมูลที่มีจำนวนตัวอย่างน้อยและยังคงให้ผลลัพธ์ที่น่าพึงพอใจ
 
+#### The DeepGum models that exhibit the best performance for each dataset are highlighted in red
 ![[Pasted image 20240921194911.png]]
+> GI diseases prediction performance of DeepGum. For IBD-I, IBD-II, IBD-III, CRC-I, CRC-II and CRC-III datasets, the comparative classification results of RF, XGB, MLP, metaML and DeepMicro models and autoencoder and U-net based DeepGum models are given. Each value represents the average AUC score of five experiments.
+
+#### Autoencoder and U-net models are evaluated for each dataset, and the outcomes are presented in
+![[Pasted image 20240922134950.png]]
+> GI diseases prediction comparative performance scores (AUC) for reconstructed and encoder models of U-net and autoencoder.
 #### 2. กลุ่มตัวอย่างที่ถูกสุ่มลดขนาด (Randomly Downsampled Cohorts)
 
 >DeepGum มีความสามารถในการรักษาประสิทธิภาพได้ดีแม้ในกรณีที่จำนวนตัวอย่างถูกลดลงอย่างมาก ซึ่งเป็นประโยชน์อย่างยิ่งในการวิเคราะห์ข้อมูล microbiome ที่มักประสบปัญหาการขาดแคลนข้อมูลตัวอย่าง ด้วยการใช้ Encoder ของ Autoencoder และ U-net ช่วยในการสร้างตัวแทนข้อมูลที่มีคุณภาพ แม้ข้อมูลต้นฉบับจะถูกลดจำนวนลง
@@ -87,6 +125,9 @@ Auto encoder เป็นสถาปัตยกรรมแบบ Neural Netwo
 
 > **การเปรียบเทียบประสิทธิภาพ**:
     - ผลการทดลองแสดงให้เห็นว่า DeepGum สามารถทำงานได้ดีกว่าโมเดลพื้นฐานอย่างมีนัยสำคัญ โดยเฉพาะอย่างยิ่งในกรณีที่จำนวนตัวอย่างมีน้อย ซึ่งเป็นข้อพิสูจน์ว่าโมเดลนี้สามารถรับมือกับปัญหาการจำแนกข้อมูลที่มีตัวอย่างจำกัดได้ดีกว่าโมเดลที่ไม่ได้ใช้วิธีการบีบอัดข้อมูล
+
+![[Pasted image 20240922133458.png]]
+> For 5, 10, 20, 50 and 100 randomly selected samples from each dataset, the comparative average AUC scores for RF classification and using the RF classifier after training with DeepGum models are given. (small-sample datasets namely IBD-I, IBD-II, IBD-III, CRC-I, CRC-II, and CRC-III.)
 
 ---
 ### Discussion
